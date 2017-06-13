@@ -13,6 +13,11 @@ public abstract class MethodEvent
 		m_methodName = name;
 	}
 	
+	public String getMethodName()
+	{
+		return m_methodName;
+	}
+	
 	/**
 	 * Event representing a method call
 	 */

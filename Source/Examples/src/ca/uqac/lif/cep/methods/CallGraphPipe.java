@@ -22,16 +22,16 @@ import ca.uqac.lif.cep.tmf.Fork;
 
 /**
  * Creates a call graph from a stream of method events
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  *
  */
-public class CallGraph
+public class CallGraphPipe
 {
 	public static void main(String[] args) throws ConnectorException
 	{
 		String filename = "trace-1.txt";
 		// Setup source from an input file
-		LineReader feeder = new LineReader(CallGraph.class.getResourceAsStream(filename));
+		LineReader feeder = new LineReader(CallGraphPipe.class.getResourceAsStream(filename));
 		FunctionProcessor converter = new FunctionProcessor(StringToEvent.instance);
 		connect(feeder, converter);
 		Fork f1 = new Fork(3);

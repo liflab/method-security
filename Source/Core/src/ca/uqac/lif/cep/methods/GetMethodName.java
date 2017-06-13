@@ -38,6 +38,6 @@ public class GetMethodName extends UnaryFunction<MethodEvent,String>
 	@Override
 	public String getValue(MethodEvent x)
 	{
-		return x.m_methodName;
+		return x.getMethodName();
 	}
 }
