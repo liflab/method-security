@@ -1,0 +1,14 @@
+call a
+call b
+return b
+call c
+return c
+return a
+call a
+return a
+call bar
+call a
+call b
+return b
+return a
+return bar
