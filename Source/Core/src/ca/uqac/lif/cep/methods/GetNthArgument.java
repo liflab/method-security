@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.methods;
 
 import ca.uqac.lif.cep.functions.FunctionException;
+import ca.uqac.lif.cep.functions.InvalidArgumentException;
 import ca.uqac.lif.cep.functions.NothingToReturnException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.methods.MethodEvent.MethodCall;
@@ -45,6 +46,10 @@ public class GetNthArgument extends UnaryFunction<MethodEvent,Object>
 		if (!(x instanceof MethodCall))
 		{
 			throw new NothingToReturnException(this);
+		}
+		if (m_index < 0 || m_index >= ((MethodCall) x).argumentCount())
+		{
+			throw new InvalidArgumentException(this, 0);
 		}
 		return ((MethodCall) x).getArgument(m_index);
 	}

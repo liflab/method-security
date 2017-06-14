@@ -1,14 +1,14 @@
-call a
-call b
-return b
-call c
-return c
-return a
-call a
-return a
+call MyClass.a
+call OtherClass.b 0 foo
+return OtherClass.b
+call OutputStream.write abcd
+return OutputStream.write
+return MyClass.a
+call MyClass.a
+return MyClass.a
 call bar
-call a
-call b
-return b
-return a
+call MyClass.a
+call OtherClass.b 1 bar
+return OtherClass.b
+return MyClass.a
 return bar

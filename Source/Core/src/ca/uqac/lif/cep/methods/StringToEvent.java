@@ -44,7 +44,12 @@ public class StringToEvent extends UnaryFunction<String,MethodEvent>
 		String[] parts = x.split("\\s+");
 		if (parts[0].compareToIgnoreCase("call") == 0)
 		{
-			return new MethodCall(parts[1].trim());
+			Object[] args = new Object[parts.length - 2];
+			for (int i = 2; i < parts.length; i++)
+			{
+				args[i - 2] = parts[i];
+			}
+			return new MethodCall(parts[1].trim(), args);
 		}
 		return new MethodReturn(parts[1].trim());
 	}

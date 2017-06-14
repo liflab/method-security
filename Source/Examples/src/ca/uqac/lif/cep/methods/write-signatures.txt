@@ -1,0 +1,2 @@
+OutputStream.write String 0
+OtherClass.b String String 1

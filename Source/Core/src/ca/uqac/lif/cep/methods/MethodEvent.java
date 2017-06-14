@@ -61,6 +61,15 @@ public abstract class MethodEvent
 			return m_arguments[index];
 		}
 		
+		/**
+		 * Gets the number of arguments passed to this method
+		 * @return The number of arguments
+		 */
+		public int argumentCount()
+		{
+			return m_arguments.length;
+		}
+		
 		@Override
 		public String toString()
 		{
