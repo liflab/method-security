@@ -31,10 +31,11 @@ import ca.uqac.lif.cep.io.LineReader;
 import ca.uqac.lif.cep.numbers.Addition;
 
 /**
- * Chain of processors counting bytes written
+ * Chain of processors counting total bytes written by all methods
+ * in the execution of the program
  * @author Sylvain Hallé
  */
-public class LimitBytesWritten 
+public class LimitBytesWrittenTotal 
 {
 	public static void main(String[] args) throws ConnectorException
 	{
@@ -43,7 +44,7 @@ public class LimitBytesWritten
 		LineReader feeder = new LineReader(CallGraphPipe.class.getResourceAsStream(filename));
 		FunctionProcessor converter = new FunctionProcessor(StringToEvent.instance);
 		connect(feeder, converter);
-		Function byte_count = new ByteCount(new Scanner(LimitBytesWritten.class.getResourceAsStream("write-signatures.txt")));
+		Function byte_count = new ByteCount(new Scanner(LimitBytesWrittenTotal.class.getResourceAsStream("write-signatures.txt")));
 		FunctionProcessor byte_count_p = new FunctionProcessor(byte_count);
 		connect(converter, byte_count_p);
 		CumulativeProcessor sum = new CumulativeProcessor(new CumulativeFunction<Number>(Addition.instance));
