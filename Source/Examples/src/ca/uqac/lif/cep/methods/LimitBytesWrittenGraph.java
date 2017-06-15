@@ -90,7 +90,9 @@ public class LimitBytesWrittenGraph
 		CumulativeProcessor union = new CumulativeProcessor(new CumulativeFunction<Multiset>(MultisetUnion.instance));
 		connect(wrap, union);
 		// Plot
-		FunctionProcessor plot = new FunctionProcessor(new GnuplotScatterplot("time", false));
+		GnuplotScatterplot scatterplot = new GnuplotScatterplot("time", false);
+		scatterplot.setStacked(true);
+		FunctionProcessor plot = new FunctionProcessor(scatterplot);
 		connect(union, plot);
 		// Pull
 		Processor to_pull = plot;
