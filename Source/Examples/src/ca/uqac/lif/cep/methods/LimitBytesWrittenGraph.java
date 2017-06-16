@@ -23,13 +23,14 @@ import ca.uqac.lif.cep.*;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import static ca.uqac.lif.cep.Connector.*;
 import ca.uqac.lif.cep.functions.*;
-import ca.uqac.lif.cep.gnuplot.GnuplotProcessor;
 import ca.uqac.lif.cep.gnuplot.GnuplotScatterplot;
 import ca.uqac.lif.cep.io.LineReader;
 import ca.uqac.lif.cep.numbers.Addition;
 import ca.uqac.lif.cep.numbers.NumberCast;
 import ca.uqac.lif.cep.sets.*;
 import ca.uqac.lif.cep.tmf.Fork;
+import ca.uqac.lif.cep.tmf.FunctionFaucet;
+import ca.uqac.lif.cep.tmf.Pump;
 import ca.uqac.lif.cep.tuples.*;
 
 /**
@@ -89,19 +90,21 @@ public class LimitBytesWrittenGraph
 		connect(merge_tuples, wrap);
 		CumulativeProcessor union = new CumulativeProcessor(new CumulativeFunction<Multiset>(MultisetUnion.instance));
 		connect(wrap, union);
-		// Plot
+		// Here, we insert a pump and a faucet. This is to avoid generating a plot
+		// for every input event. Rather, the pump will drain the source of tuples
+		// to the faucet, and we'll then query the faucet once for the final plot.
+		Pump pump = new Pump();
+		connect(union, pump);
 		GnuplotScatterplot scatterplot = new GnuplotScatterplot("time", false);
 		scatterplot.setStacked(true);
-		FunctionProcessor plot = new FunctionProcessor(scatterplot);
-		connect(union, plot);
+		FunctionFaucet<Multiset,String> plot = new FunctionFaucet<Multiset,String>(scatterplot);
+		connect(pump, plot);
+		pump.start();
 		// Pull
 		Processor to_pull = plot;
 		Pullable p = to_pull.getPullableOutput();
-		
-		for (Object o : p)
-		{
-			System.out.println(o);
-		}
+		Object o = p.pull();
+		System.out.println(o);
 	}
 
 }
